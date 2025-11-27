@@ -1,0 +1,22 @@
+{
+  "name": "portal-nitro-m365-backend",
+  "version": "1.0.0",
+  "description": "Portal Nitro de Implantação Microsoft 365 backend API",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node src/server.js",
+    "seed": "node src/prisma/seed.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "@prisma/client": "^5.15.0",
+    "morgan": "^1.10.0",
+    "prisma": "^5.15.0"
+  }
+}
