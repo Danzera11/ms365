@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Nitro - E-mail</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+  <div id="nitro-header"></div>
+  <div id="nitro-menu"></div>
+  <main class="max-w-7xl mx-auto px-6 py-6 space-y-6">
+    <section>
+      <h1 class="text-2xl font-bold section-title">Planejamento de e-mail</h1>
+      <p class="text-gray-600">Metodologia de migração, janelas preferidas e componentes críticos.</p>
+    </section>
+    <div id="email-detalhes"></div>
+    <form id="form-email" class="nitro-card p-6 grid md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-semibold mb-1">Plataforma de origem</label>
+        <input class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Exchange, Zimbra...">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1">Metodologia</label>
+        <input class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Cutover, híbrido, staged">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1">Janela preferida</label>
+        <input class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Noites, finais de semana">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1">Observações</label>
+        <input class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Dependências, delegações..."></input>
+      </div>
+      <div class="md:col-span-2">
+        <button class="bg-sky-600 text-white px-4 py-2 rounded-lg">Salvar planejamento</button>
+      </div>
+    </form>
+  </main>
+  <script type="module" src="/public/js/email.js"></script>
+</body>
+</html>
