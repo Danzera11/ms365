@@ -1,0 +1,185 @@
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
+
+const prisma = new PrismaClient();
+
+async function main() {
+  console.log("🌱 Iniciando Seed do Portal Nitro M365...");
+
+  //
+  // =====================================================
+  // 1. Criar Analista Administrador
+  // =====================================================
+  //
+  const senhaHash = await bcrypt.hash("nitro123", 10);
+
+  const analista = await prisma.analyst.upsert({
+    where: { email: "analista@nitro.com" },
+    update: {},
+    create: {
+      nome: "Analista Nitro",
+      email: "analista@nitro.com",
+      senha: senhaHash,
+      papel: "analista"
+    }
+  });
+
+  console.log("✓ Analista criado:", analista.email);
+
+  //
+  // =====================================================
+  // 2. Criar Cliente Demonstração
+  // =====================================================
+  //
+  const cliente = await prisma.client.upsert({
+    where: { dominio: "cliente.com.br" },
+    update: {},
+    create: {
+      nome: "Cliente Demonstração",
+      dominio: "cliente.com.br",
+      segmento: "Serviços"
+    }
+  });
+
+  console.log("✓ Cliente criado:", cliente.nome);
+
+  //
+  // =====================================================
+  // 3. Criar Projeto Principal
+  // =====================================================
+  //
+  const projeto = await prisma.projeto.create({
+    data: {
+      nome: "Implantação Microsoft 365 - Cliente Demonstração",
+      clienteId: cliente.id,
+      descricao: "Projeto de demonstração inicial para testar fluxos e integrações.",
+      status: "planejamento",
+      progresso: 5
+    }
+  });
+
+  console.log("✓ Projeto criado:", projeto.nome);
+
+  //
+  // =====================================================
+  // 4. Criar Levantamento (14 serviços)
+  // =====================================================
+  //
+  const servicos = [
+    { nome: "Exchange Online", categoria: "Email", criticidade: "Alta", tempoEstimado: 8 },
+    { nome: "SharePoint Online", categoria: "Colaboração", criticidade: "Alta", tempoEstimado: 20 },
+    { nome: "Teams", categoria: "Comunicação", criticidade: "Alta", tempoEstimado: 12 },
+    { nome: "OneDrive", categoria: "Armazenamento", criticidade: "Média", tempoEstimado: 6 },
+    { nome: "Azure AD / Entra ID", categoria: "Identidade", criticidade: "Alta", tempoEstimado: 15 },
+    { nome: "Segurança e Compliance", categoria: "Segurança", criticidade: "Alta", tempoEstimado: 10 },
+    { nome: "Intune", categoria: "Gerenciamento", criticidade: "Média", tempoEstimado: 16 },
+    { nome: "Planner / Tasks", categoria: "Produtividade", criticidade: "Baixa", tempoEstimado: 3 },
+    { nome: "Forms / Power Automate", categoria: "Automação", criticidade: "Média", tempoEstimado: 8 },
+    { nome: "Viva", categoria: "Engajamento", criticidade: "Baixa", tempoEstimado: 5 },
+    { nome: "Yammer", categoria: "Comunicação", criticidade: "Baixa", tempoEstimado: 2 },
+    { nome: "Compliance Manager", categoria: "Segurança", criticidade: "Alta", tempoEstimado: 6 },
+    { nome: "DLP / Etiquetas Sensíveis", categoria: "Segurança", criticidade: "Alta", tempoEstimado: 10 },
+    { nome: "Governança de Grupos", categoria: "Administração", criticidade: "Média", tempoEstimado: 5 }
+  ];
+
+  for (const s of servicos) {
+    await prisma.levantamento.create({
+      data: {
+        projetoId: projeto.id,
+        ...s
+      }
+    });
+  }
+
+  console.log("✓ Levantamento criado (14 itens)");
+
+  //
+  // =====================================================
+  // 5. Configuração de Licenciamento
+  // =====================================================
+  //
+  await prisma.licenciamento.create({
+    data: {
+      projetoId: projeto.id,
+      m365basic: 10,
+      m365standard: 30,
+      appsforbusiness: 5,
+      f3: 0,
+      e3: 2,
+      e5: 1,
+      observacoes: "Modelo demonstrativo inicial."
+    }
+  });
+
+  console.log("✓ Licenciamento configurado");
+
+  //
+  // =====================================================
+  // 6. Orientações Nitro (conteúdos padrão)
+  // =====================================================
+  //
+  await prisma.orientacao.create({
+    data: {
+      projetoId: projeto.id,
+
+      teams: `
+<h2>Boas práticas do Microsoft Teams</h2>
+<ul>
+  <li>Criar equipes por departamento.</li>
+  <li>Usar canais padrão para organização interna.</li>
+  <li>Evitar enviar arquivos no chat — usar canais.</li>
+  <li>Manter dois proprietários por equipe.</li>
+</ul>`,
+
+      sharepoint: `
+<h2>Padrão de Sites SharePoint</h2>
+<p>Recomendamos a criação de um site por departamento com bibliotecas organizadas por processos.</p>
+`,
+
+      emails: `
+<h2>Migração de Email</h2>
+<ul>
+  <li>Revisar tamanho das caixas.</li>
+  <li>Verificar encaminhamentos ativos.</li>
+  <li>Criar janela de migração.</li>
+</ul>`,
+
+      licencas: `
+<h2>Modelos de Licenciamento</h2>
+<p>Standard é a opção recomendada como padrão Nitro.</p>
+`,
+
+      seguranca: `
+<h2>Segurança</h2>
+<ul>
+  <li>MFA obrigatório.</li>
+  <li>Hardening com Políticas de Acesso Condicional.</li>
+  <li>Bloqueio de legados.</li>
+</ul>`,
+
+      governance: `
+<h2>Governança</h2>
+<p>Estrutura de criação controlada de Teams, proprietários, ciclo de vida e políticas de expiração.</p>
+`
+    }
+  });
+
+  console.log("✓ Orientações Nitro adicionadas");
+
+  //
+  // =====================================================
+  // 7. Concluído
+  // =====================================================
+  //
+  console.log("🌱 Seed concluído com sucesso!");
+}
+
+main()
+  .catch((e) => {
+    console.error("❌ Erro no seed:", e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
+

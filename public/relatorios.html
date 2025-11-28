@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Nitro - Relatórios</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+  <div id="nitro-header"></div>
+  <div id="nitro-menu"></div>
+  <main class="max-w-7xl mx-auto px-6 py-6 space-y-6">
+    <section class="grid md:grid-cols-2 gap-6">
+      <div class="nitro-card p-6">
+        <h3 class="font-semibold text-lg">Distribuição de licenças</h3>
+        <ul id="relatorio-licencas" class="mt-3 space-y-1"></ul>
+      </div>
+      <div class="nitro-card p-6">
+        <h3 class="font-semibold text-lg">Status dos serviços</h3>
+        <ul id="relatorio-servicos" class="mt-3 space-y-1"></ul>
+      </div>
+    </section>
+    <section class="grid md:grid-cols-2 gap-6">
+      <div class="nitro-card p-6">
+        <h3 class="font-semibold text-lg">Cronograma</h3>
+        <ul id="relatorio-cronograma" class="mt-3 space-y-1"></ul>
+      </div>
+      <div class="nitro-card p-6">
+        <h3 class="font-semibold text-lg">Mapa de acesso</h3>
+        <ul class="mt-3 space-y-1">
+          <li>Proteção de e-mail com MFA e DLP</li>
+          <li>SharePoint com rótulos e versionamento</li>
+          <li>Teams com políticas de retenção e expiração</li>
+        </ul>
+      </div>
+    </section>
+    <section class="nitro-card p-6">
+      <h3 class="font-semibold text-lg">Resumo executivo</h3>
+      <p id="resumo-executivo" class="text-gray-700 mt-2"></p>
+      <h4 class="font-semibold mt-4">Recomendações</h4>
+      <ul id="relatorio-recomendacoes" class="list-disc list-inside text-gray-700"></ul>
+      <h4 class="font-semibold mt-4">Logs</h4>
+      <ul id="relatorio-logs" class="text-gray-700"></ul>
+      <button class="mt-4 bg-sky-600 text-white px-4 py-2 rounded-lg">Exportar PDF</button>
+    </section>
+  </main>
+  <script type="module" src="/public/js/relatorios.js"></script>
+</body>
+</html>
