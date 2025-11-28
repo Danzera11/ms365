@@ -1,34 +1,28 @@
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export async function login(req, res) {
+  const { email, senha } = req.body;
+
+  if (!email || !senha) {
+    return res.status(400).json({ message: 'E-mail e senha são obrigatórios' });
+  }
+
   try {
-    const { email, senha } = req.body;
-
-    if (!email || !senha) {
-      return res.status(400).json({ message: "E-mail e senha são obrigatórios" });
-    }
-
-    // Buscar analista pelo e-mail
-    const user = await prisma.analyst.findUnique({
-      where: { email }
-    });
+    const user = await prisma.analyst.findUnique({ where: { email } });
 
     if (!user) {
-      return res.status(401).json({ message: "Usuário não encontrado" });
+      return res.status(401).json({ message: 'Credenciais inválidas' });
     }
 
-    // Comparar senha com hash do banco
-    const valid = await bcrypt.compare(senha, user.senha);
-
-    if (!valid) {
-      return res.status(401).json({ message: "Senha incorreta" });
+    const senhaValida = await bcrypt.compare(senha, user.senha);
+    if (!senhaValida) {
+      return res.status(401).json({ message: 'Credenciais inválidas' });
     }
 
-    // Gerar token JWT
     const token = jwt.sign(
       {
         sub: user.id,
@@ -36,7 +30,7 @@ export async function login(req, res) {
         nome: user.nome
       },
       process.env.JWT_SECRET,
-      { expiresIn: "8h" }
+      { expiresIn: '8h' }
     );
 
     return res.json({
@@ -48,10 +42,8 @@ export async function login(req, res) {
         papel: user.papel
       }
     });
-
-  } catch (err) {
-    console.error("Erro no login:", err);
-    return res.status(500).json({ message: "Erro interno no servidor" });
+  } catch (error) {
+    console.error('Erro ao autenticar usuário', error);
+    return res.status(500).json({ message: 'Erro interno no servidor' });
   }
 }
-

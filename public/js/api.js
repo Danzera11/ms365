@@ -1,7 +1,14 @@
-const API_BASE = '/api';
+const API_BASE = 'http://10.10.5.108:3000/api';
+
+function buildHeaders(extra = {}) {
+  const token = localStorage.getItem('token');
+  const headers = { ...extra };
+  if (token) headers.Authorization = `Bearer ${token}`;
+  return headers;
+}
 
 export async function apiGet(path) {
-  const response = await fetch(`${API_BASE}${path}`);
+  const response = await fetch(`${API_BASE}${path}`, { headers: buildHeaders() });
   if (!response.ok) throw new Error('Erro ao buscar dados');
   return response.json();
 }
@@ -9,7 +16,7 @@ export async function apiGet(path) {
 export async function apiPost(path, body) {
   const response = await fetch(`${API_BASE}${path}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: buildHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify(body)
   });
   if (!response.ok) throw new Error('Erro ao salvar');
@@ -19,7 +26,7 @@ export async function apiPost(path, body) {
 export async function apiPut(path, body) {
   const response = await fetch(`${API_BASE}${path}`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    headers: buildHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify(body)
   });
   if (!response.ok) throw new Error('Erro ao atualizar');
