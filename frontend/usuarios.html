@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Nitro - Usuários</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+  <div id="nitro-header"></div>
+  <div id="nitro-menu"></div>
+  <main class="max-w-7xl mx-auto px-6 py-6 space-y-6">
+    <section class="nitro-card p-6">
+      <h2 class="text-xl font-bold section-title">Cadastro de usuários</h2>
+      <form id="form-usuario" class="grid md:grid-cols-2 gap-4 mt-4">
+        <div>
+          <label class="block text-sm font-semibold mb-1">Nome completo</label>
+          <input name="nome" class="w-full border border-gray-300 rounded-lg px-3 py-2" required>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-1">Departamento</label>
+          <input name="departamento" class="w-full border border-gray-300 rounded-lg px-3 py-2" required>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-1">Cargo</label>
+          <input name="cargo" class="w-full border border-gray-300 rounded-lg px-3 py-2" required>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-1">E-mail</label>
+          <input type="email" name="email" class="w-full border border-gray-300 rounded-lg px-3 py-2" required>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-1">Tamanho da caixa (GB)</label>
+          <input type="number" name="tamanhoCaixaGb" class="w-full border border-gray-300 rounded-lg px-3 py-2" required>
+        </div>
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold">Serviços</label>
+          <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="officeLocal"> Office local</label>
+          <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="migrarEmail" checked> Migrar e-mail</label>
+          <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="oneDrive" checked> OneDrive</label>
+          <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="sharePoint" checked> SharePoint</label>
+          <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="teams" checked> Teams</label>
+        </div>
+        <div class="md:col-span-2">
+          <button class="bg-sky-600 text-white px-4 py-2 rounded-lg">Salvar usuário</button>
+        </div>
+      </form>
+    </section>
+    <section class="nitro-card p-6">
+      <h3 class="font-semibold text-lg">Usuários cadastrados</h3>
+      <table class="min-w-full mt-4 table-nitro">
+        <thead><tr><th class="px-4 py-2 text-left">Nome</th><th class="px-4 py-2 text-left">Depto</th><th class="px-4 py-2 text-left">Cargo</th><th class="px-4 py-2 text-left">E-mail</th><th class="px-4 py-2 text-left">Caixa</th><th class="px-4 py-2 text-left">Email</th><th class="px-4 py-2 text-left">OneDrive</th><th class="px-4 py-2 text-left">SP</th><th class="px-4 py-2 text-left">Teams</th></tr></thead>
+        <tbody id="usuarios-tabela"></tbody>
+      </table>
+    </section>
+  </main>
+  <script type="module" src="/public/js/usuarios.js"></script>
+</body>
+</html>

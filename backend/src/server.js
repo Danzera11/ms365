@@ -18,18 +18,38 @@ import { auth } from './middleware/auth.js';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const frontendPath = path.join(__dirname, '../frontend');
+
+app.use(
+  cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 app.use(express.json());
 app.use(morgan('dev'));
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-app.use('/public', express.static(path.join(__dirname, '../public')));
+// Static files
+app.use(express.static(frontendPath));
+app.use('/public', express.static(frontendPath));
 
+// HTML entrypoints
 app.get('/', (_req, res) => {
-  res.json({ status: 'Portal Nitro API online' });
+  res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
+['dashboard', 'levantamento', 'sharepoint', 'teams', 'usuarios', 'cronograma', 'relatorios', 'email', 'orientacoes'].forEach(
+  (page) => {
+    app.get(`/${page}`, (_req, res) => {
+      res.sendFile(path.join(frontendPath, `${page}.html`));
+    });
+  }
+);
+
+// API routes
 app.use('/api/auth', authRouter);
 app.use('/api/projeto', auth, projetoRouter);
 app.use('/api/usuarios', auth, usuariosRouter);
@@ -40,7 +60,7 @@ app.use('/api/teams', auth, teamsRouter);
 app.use('/api/cronograma', auth, cronogramaRouter);
 app.use('/api/relatorios', auth, relatoriosRouter);
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Portal Nitro API listening on port ${port}`);
+  console.log(`Portal Nitro server running on port ${port}`);
 });

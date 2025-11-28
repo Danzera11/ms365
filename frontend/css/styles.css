@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --nitro-primaria: #1f2a44;
+  --nitro-secundaria: #0ea5e9;
+  --nitro-escuro: #111827;
+  --nitro-claro: #f3f4f6;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--nitro-claro);
+  color: var(--nitro-escuro);
+}
+
+.nitro-card {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+  border: 1px solid #e5e7eb;
+}
+
+.nitro-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.progress-bar {
+  height: 10px;
+  border-radius: 9999px;
+}
+
+.header-gradient {
+  background: linear-gradient(90deg, #0f172a 0%, #1d4ed8 50%, #0ea5e9 100%);
+}
+
+.section-title {
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.table-nitro thead {
+  background: #e5e7eb;
+  font-weight: 700;
+}
+
+a {
+  color: var(--nitro-secundaria);
+}
