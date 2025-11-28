@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Nitro - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body class="bg-slate-900 text-white">
+  <div class="min-h-screen flex items-center justify-center px-4">
+    <div class="bg-white text-gray-900 rounded-2xl shadow-2xl p-8 max-w-3xl w-full grid md:grid-cols-2 gap-8">
+      <div>
+        <p class="uppercase text-sm text-sky-600 font-semibold">Portal Nitro</p>
+        <h1 class="text-3xl font-bold mt-2">Plataforma de Implantação Microsoft 365</h1>
+        <p class="text-gray-600 mt-2">Acesse como Analista para edição completa ou Cliente para visualização de progresso e relatórios.</p>
+        <div class="mt-4 space-y-2 text-sm text-gray-600">
+          <p class="flex items-center gap-2">✔ Gestão completa do projeto</p>
+          <p class="flex items-center gap-2">✔ Dashboard, cronograma e relatórios</p>
+          <p class="flex items-center gap-2">✔ Área do cliente em tempo real</p>
+        </div>
+      </div>
+      <div>
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold mb-1">E-mail</label>
+            <input type="email" name="email" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="analista@nitro.com" required>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold mb-1">Senha</label>
+            <input type="password" name="senha" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="analista" required>
+          </div>
+          <button type="submit" class="w-full bg-sky-600 text-white py-3 rounded-lg font-semibold hover:bg-sky-700">Entrar</button>
+          <p class="text-xs text-gray-500">Credenciais de exemplo: analista@nitro.com / analista ou cliente@empresa.com / cliente</p>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/public/js/index.js"></script>
+</body>
+</html>
